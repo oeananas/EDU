@@ -81,8 +81,8 @@ export function removeUserCourse(formValues, dispatch, props) {
                     Authorization: 'JWT ' + token
                 }
             }).then(response => {
-                // redirect to the route '/my-courses'
-                history.push("/my-courses");
+                // redirect to the route '/'
+                history.push("/");
             }).catch((error) => {
                 console.log(error);
             });
