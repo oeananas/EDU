@@ -3,9 +3,8 @@ Education Platform Project (Django Rest Framework + React JS)
 
 # Backend Installation (Django)
 ```bash
-cd backend
+cd backend/edu
 pip3 install -r requirements.txt
-cd edu
 ./manage.py migrate
 ./manage.py runserver
 ```
@@ -25,4 +24,4 @@ npm start
 
 # Usage
 
-open in your browser 'http://127.0.0.1:8030'
+open in your browser 'http://127.0.0.1:3000'
