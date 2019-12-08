@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from datetime import timedelta
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     # django allauth
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     # custom apps
     'training',
     'users',
@@ -186,3 +188,6 @@ CELERY_TASK_SERIALIZER = 'json'
 
 # email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# py.test mode
+TEST_MODE = 'test' in sys.argv or sys.argv[0].endswith('py.test') or 'PYTEST_RUNNING' in os.environ
