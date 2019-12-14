@@ -18,6 +18,7 @@ import NoMatch from "./NoMatch";
 import CourseLessons from "./edu/CourseLessons";
 import CourseTeachers from "./edu/CourseTeachers";
 import Homework from "./edu/Homework";
+import Solution from "./edu/Solution";
 
 const MainContent = () => (
     <div>
@@ -37,7 +38,8 @@ const MainContent = () => (
             <Route path="/my-courses" component={RequireAuth(UserCourses)}/>
             <Route path="/course-lessons" component={RequireAuth(CourseLessons)}/>
             <Route path="/course-teachers" component={RequireAuth(CourseTeachers)}/>
-            <Route path="/my-homework" component={RequireAuth(Homework)}/>
+            <Route path="/my-homeworks" component={RequireAuth(Homework)}/>
+            <Route path="/my-homework" component={RequireAuth(Solution)}/>
             <Route component={NoMatch}/>
         </Switch>
     </div>

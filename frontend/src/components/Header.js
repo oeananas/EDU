@@ -16,7 +16,7 @@ class Header extends Component {
                     <li className="nav-item" key="profile">
                         <Link className="nav-link" to="/profile">Profile</Link>
                     </li>,
-                    <li className="nav-item" key="profile">
+                    <li className="nav-item" key="mycourses">
                         <Link className="nav-link" to="/my-courses">My courses</Link>
                     </li>,
                     <li className="nav-item" key="logout">
@@ -41,7 +41,7 @@ class Header extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <Link to="/" className="navbar-brand">EDU</Link>
                 <ul className="navbar-nav">
                     {this.renderLinks()}

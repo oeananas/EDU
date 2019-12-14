@@ -15,7 +15,7 @@ export default function(ComposedComponent) {
 
         }
 
-        componentWillUpdate(nextProps) {
+        componentDidUpdate(nextProps) {
             this.checkAuthentication(nextProps);
         }
 

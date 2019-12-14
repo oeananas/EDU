@@ -15,6 +15,8 @@ const eduReducer = (state = {}, action) => {
             return { ...state, authenticated: true, course_lessons: action.payload};
         case EduTypes.COURSE_TEACHERS:
             return { ...state, authenticated: true, course_teachers: action.payload};
+        case EduTypes.HOMEWORKS:
+            return { ...state, authenticated: true, homeworks: action.payload};
         case EduTypes.HOMEWORK:
             return { ...state, authenticated: true, homework: action.payload};
     }

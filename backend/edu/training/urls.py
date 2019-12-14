@@ -11,5 +11,7 @@ urlpatterns = [
     path('course/lessons/<int:pk>/', views.LessonViewSet.as_view({'get': 'course_list'}), name='course_lessons'),
     path('course/teachers/<int:pk>/', views.TeacherViewSet.as_view({'get': 'course_list'}), name='course_teachers'),
     path('teachers/<int:pk>/', views.TeacherViewSet.as_view({'get': 'retrieve'}), name='teacher'),
-    path('my-homework/<int:pk>/', views.HomeworkViewSet.as_view({'get': 'homework_list'}), name='my_homework')
+    path('my-homeworks/<int:pk>/', views.HomeworkViewSet.as_view({'get': 'homework_list'}), name='my_homeworks'),
+    path('my-homework/<int:pk>/', views.HomeworkViewSet.as_view({'get': 'retrieve',
+                                                                 'patch': 'partial_update'}), name='my_homework')
 ]

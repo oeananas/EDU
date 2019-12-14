@@ -45,10 +45,20 @@ class Lesson(models.Model):
 
 class Homework(models.Model):
     student = models.ForeignKey(User, related_name='home_works', on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    solution = models.TextField(blank=True, null=True)
     lesson = models.ForeignKey(Lesson, related_name='home_works', on_delete=models.CASCADE)
     is_done = models.BooleanField(default=False)
+    is_ready = models.BooleanField(default=False)
 
     objects = models.Manager()
 
     def __str__(self):
         return f'Homework {self.lesson} ({self.student})'
+
+    def save(self, *args, **kwargs):
+        if self.solution:
+            self.is_ready = True
+        else:
+            self.is_ready = False
+        super().save(*args, **kwargs)

@@ -17,5 +17,6 @@ export const EduUrls = {
     REMOVE_COURSE: `${ROOT_URL}training/remove-course-user/`,
     COURSE_LESSONS: `${ROOT_URL}training/course/lessons/`,
     COURSE_TEACHERS: `${ROOT_URL}training/course/teachers/`,
+    HOMEWORKS: `${ROOT_URL}training/my-homeworks/`,
     HOMEWORK: `${ROOT_URL}training/my-homework/`,
 };

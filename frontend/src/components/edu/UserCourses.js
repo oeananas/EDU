@@ -39,7 +39,7 @@ class UserCourses extends Component {
                                 <div className="col-5">
                                     <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-primary mr-2" to='/course-lessons'>Lessons</Link>
                                     <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-success mr-2" to="/course-teachers">Teachers</Link>
-                                    <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-warning mr-2" to="/my-homework">My homework</Link>
+                                    <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-warning mr-2" to="/my-homeworks">My homework</Link>
                                 </div>
                                 <div className="col-4">
                                     <button onClick={this.props.removeUserCourse.bind(this, item.id)} className="btn btn-outline-danger mr-2">Remove</button>

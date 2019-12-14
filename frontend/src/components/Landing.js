@@ -23,16 +23,17 @@ class Landing extends Component {
 
     renderAddButton(item) {
         const user_courses = this.props.user_courses;
-        if (!user_courses.some(element => element.id === item.id)) {
-            return (
-                <button onClick={this.props.addUserCourse.bind(this, item.id)} className="btn btn-outline-success mr-2">Add to my courses</button>
-            )
-        } else {
-            return (
-                <Link to="#" className="disabled btn btn-outline-warning mr-2">Already in my courses</Link>
-            )
+        if (user_courses) {
+            if (!user_courses.some(element => element.id === item.id)) {
+                return (
+                    <button onClick={this.props.addUserCourse.bind(this, item.id)} className="btn btn-outline-success mr-2">Add to my courses</button>
+                )
+            } else {
+                return (
+                    <Link to="#" className="disabled btn btn-outline-warning mr-2">Already in my courses</Link>
+                )
+            }
         }
-
     }
 
     renderCourses() {

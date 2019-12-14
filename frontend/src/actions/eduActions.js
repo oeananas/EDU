@@ -141,6 +141,32 @@ export function getCourseTeachers() {
     };
 }
 
+function setHomeworks(payload) {
+    return {
+        type: EduTypes.HOMEWORKS,
+        payload: payload
+    };
+}
+
+export function getHomeworks() {
+    return function(dispatch) {
+        const token = getUserToken(store.getState());
+        const course_pk = localStorage.getItem("course");
+        if (token) {
+            axios.get(`${EduUrls.HOMEWORKS}${course_pk}/`, {
+                headers: {
+                    Authorization: 'JWT ' + token
+                }
+            }).then(response => {
+                dispatch(setHomeworks(response.data));
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    };
+}
+
+
 function setHomework(payload) {
     return {
         type: EduTypes.HOMEWORK,
@@ -148,12 +174,13 @@ function setHomework(payload) {
     };
 }
 
+
 export function getHomework() {
     return function(dispatch) {
         const token = getUserToken(store.getState());
-        const course_pk = localStorage.getItem("course");
+        const homework_pk = localStorage.getItem("homework");
         if (token) {
-            axios.get(`${EduUrls.HOMEWORK}${course_pk}/`, {
+            axios.get(`${EduUrls.HOMEWORK}${homework_pk}/`, {
                 headers: {
                     Authorization: 'JWT ' + token
                 }
@@ -164,4 +191,22 @@ export function getHomework() {
             });
         }
     };
+}
+
+
+export function sendHomework(formValues, dispatch, props) {
+    const token = getUserToken(store.getState());
+    const homework_pk = localStorage.getItem("homework");
+    return axios.patch(`${EduUrls.HOMEWORK}${homework_pk}/`, formValues, {
+        headers: {
+            Authorization: 'JWT ' + token
+        }
+    })
+        .then(response => {
+            dispatch(getHomework());
+        }).catch((error) => {
+            // If request is bad...
+            // Show an error to the user
+            console.log(error);
+        });
 }
