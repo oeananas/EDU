@@ -12,3 +12,4 @@ redis==3.3.8
 pytest==5.3.1
 pytest-django==3.7.0
 coverage==4.5.4
+drf-yasg==1.17.0

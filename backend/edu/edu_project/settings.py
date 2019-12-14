@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # swagger
+    'drf_yasg',
     # custom apps
     'training',
     'users',
@@ -191,3 +193,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # py.test mode
 TEST_MODE = 'test' in sys.argv or sys.argv[0].endswith('py.test') or 'PYTEST_RUNNING' in os.environ
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Basic': {
+            'type': 'basic'
+      },
+      'JWT': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
+   }
+}
