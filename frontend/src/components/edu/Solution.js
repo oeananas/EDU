@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {getHomework, sendHomework} from "../../actions/eduActions";
 import {Link} from "react-router-dom";
-import { reduxForm, Field, propTypes as Props } from "redux-form";
+import { reduxForm, Field } from "redux-form";
 import {renderError, renderTextAreaField } from "../../utils/renderUtils";
 
 
@@ -12,7 +12,6 @@ class Solution extends Component {
     static propTypes = {
         getHomework: PropTypes.func.isRequired,
         homework: PropTypes.object,
-        ...Props
     };
 
     componentDidMount() {

@@ -203,7 +203,8 @@ export function sendHomework(formValues, dispatch, props) {
         }
     })
         .then(response => {
-            dispatch(getHomework());
+            dispatch(setHomework(response.data));
+            history.push('/my-homeworks');
         }).catch((error) => {
             // If request is bad...
             // Show an error to the user
