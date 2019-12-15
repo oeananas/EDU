@@ -36,7 +36,10 @@ class Homework extends Component {
                                 <th scope="row">{item.lesson_name}</th>
                                 <td>{item.is_done.toString()}</td>
                                 <td>{item.is_ready.toString()}</td>
-                                <td><Link onClick={() => localStorage.setItem("homework", item.id)} className='btn btn-sm btn-outline-secondary' to='/my-homework'>Edit</Link></td>
+                                <td><Link onClick={() => {
+                                    localStorage.setItem("homework", item.id);
+                                    localStorage.setItem("solution", item.solution)
+                                }} className='btn btn-sm btn-outline-secondary' to='/my-homework'>Edit</Link></td>
                             </tr>
                         ))}
                         </tbody>

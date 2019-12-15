@@ -27,7 +27,7 @@ class Solution extends Component {
                     <h3>{homework.description}</h3>
                     <form onSubmit={handleSubmit}>
                         <fieldset className="form-group">
-                            <Field placeholder="Your solution here..." name="solution" label="Solution" component={renderTextAreaField}
+                            <Field placeholder="Your solution here..." name="solution" label="" component={renderTextAreaField}
                             />
                         </fieldset>
                         <fieldset className="form-group">
@@ -57,7 +57,7 @@ class Solution extends Component {
 function mapStateToProps(state) {
     return {
         homework: state.edu.homework,
-        initialValues: state.edu.homework
+        initialValues: {'solution': localStorage.getItem('solution')}
     }
 }
 
