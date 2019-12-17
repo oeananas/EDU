@@ -4,8 +4,6 @@ from rest_framework.test import (
     APIClient,
     APITestCase
 )
-from rest_framework.authtoken.models import Token
-import json
 from django.contrib.auth.models import User
 from .models import (
     Course,
@@ -46,73 +44,6 @@ class TestTraining(APITestCase):
         self.course.delete()
         self.teacher.delete()
 
-    def test_login_user(self):
-        data = {
-            'username': self.user.username,
-            'password': 'admin_pass'
-        }
-        res = self.client.post(reverse('rest_login'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
-    
-    def test_register_new_user(self):
-        client = APIClient()
-        data = {
-            'username': 'new_user',
-            'password1': 'user_pass',
-            'password2': 'user_pass'
-        }
-
-        res = client.post(reverse('rest_register'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-    def test_negative_register_new_user_without_required_fields(self):
-        client = APIClient()
-        data = {
-            'username': 'new_user',
-            'password1': 'user_pass',
-        }
-
-        res = client.post(reverse('rest_register'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_negative_register_new_user_with_invalid_data(self):
-        client = APIClient()
-        data = {
-            'username': 'new_user',
-            'password1': 'user_pass1',
-            'password2': 'user_pass2'
-        }
-
-        res = client.post(reverse('rest_register'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_negative_register_new_user_with_too_big_data_values(self):
-        client = APIClient()
-        data = {
-            'username': 100 * 'new_user',
-            'password1': 'user_pass',
-            'password2': 'user_pass'
-        }
-
-        res = client.post(reverse('rest_register'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_negative_login_user_with_invalid_password(self):
-        data = {
-            'username': self.user.username,
-            'password': '1'
-        }
-        res = self.client.post(reverse('rest_login'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_negative_login_user_with_invalid_username(self):
-        data = {
-            'username': 'hello world',
-            'password': 'admin_pass'
-        }
-        res = self.client.post(reverse('rest_login'), data=data)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
     def test_negative_request_without_token(self):
         client = APIClient()
         res = client.get(reverse('courses'))
@@ -145,7 +76,7 @@ class TestTraining(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_get_homework(self):
-        res = self.client.get(reverse('my_homework', kwargs={'pk': self.course.pk}))
+        res = self.client.get(reverse('my_homeworks', kwargs={'pk': self.course.pk}))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_add_remove_course_to_user_courses(self):
