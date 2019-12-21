@@ -8,22 +8,23 @@ from django.contrib.auth.models import User
 import factory
 
 
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    id = 1
+    username = 'JohnDoe'
+    first_name = 'John'
+    last_name = 'Doe'
+    email = 'test@test.com'
+    password = 'AbcDe12345678'
+
+
 class TestUser(APITestCase):
-
-    class UserFactory(factory.Factory):
-        class Meta:
-            model = User
-
-        id = 1
-        username = 'JohnDoe'
-        first_name = 'John'
-        last_name = 'Doe'
-        email = 'test@test.com'
-        password = 'AbcDe12345678'
 
     def setUp(self):
         self.client = APIClient()
-        self.user = self.UserFactory.create()
+        self.user = UserFactory.create()
 
         data = {
             'username': self.user.username,
