@@ -3,7 +3,8 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
-function configureStore(initialState) {
+
+const configureStore = (initialState) => {
     let createStoreWithMiddleware;
 
     const logger = createLogger();
@@ -14,7 +15,7 @@ function configureStore(initialState) {
     );
 
     return createStoreWithMiddleware(createStore)(rootReducer, initialState);
-}
+};
 
 let store = configureStore();
 

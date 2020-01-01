@@ -5,11 +5,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
-
 import store from "./store";
 import history from "./utils/historyUtils";
 import { authLogin } from "./actions/authActions";
 import App from "./components/App";
+
 
 const token = localStorage.getItem("token");
 
@@ -23,4 +23,5 @@ ReactDOM.render(
             <App />
         </Router>
     </Provider>
-    , document.getElementById("root"));
+    , document.getElementById("root")
+);

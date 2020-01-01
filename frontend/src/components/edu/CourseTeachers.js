@@ -11,11 +11,11 @@ class CourseTeachers extends Component {
         course_teachers: PropTypes.array,
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getCourseTeachers();
-    }
+    };
 
-    renderTeachers() {
+    renderTeachers = () => {
         const course_teachers = this.props.course_teachers;
         if (course_teachers) {
             return (
@@ -36,9 +36,9 @@ class CourseTeachers extends Component {
             );
         }
         return null;
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <div>
                 <h1 className="m-4">Teachers</h1>
@@ -49,10 +49,10 @@ class CourseTeachers extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         course_teachers: state.edu.course_teachers
     }
-}
+};
 
 export default connect(mapStateToProps, { getCourseTeachers } )(CourseTeachers);

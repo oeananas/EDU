@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { reduxForm, Field, propTypes } from "redux-form";
 import { connect } from 'react-redux'
 import { required } from "redux-form-validators"
-
 import { renderField, renderError} from "../../utils/renderUtils";
 import { updateUserProfile } from "../../actions/authActions";
+
 
 class Login extends Component {
 
@@ -12,7 +12,7 @@ class Login extends Component {
         ...propTypes
     };
 
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (
@@ -59,11 +59,11 @@ class Login extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         initialValues: state.auth.user
     }
-}
+};
 
 export default connect(mapStateToProps)(reduxForm({
     form: "update_user_profile",

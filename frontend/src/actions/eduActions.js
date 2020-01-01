@@ -6,15 +6,17 @@ import store from "../store";
 import {getUserToken} from "../utils/authUtils";
 import history from "../utils/historyUtils";
 
-function setCourses(payload) {
+
+const setCourses = (payload) => {
     return {
         type: EduTypes.COURSES,
         payload: payload
     };
-}
+};
 
-export function getCourses() {
-    return function(dispatch) {
+
+export const getCourses = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         if (token) {
             axios.get(EduUrls.COURSES, {
@@ -28,17 +30,19 @@ export function getCourses() {
             });
         }
     };
-}
+};
 
-function setUserCourses(payload) {
+
+const setUserCourses = (payload) => {
     return {
         type: EduTypes.USER_COURSES,
         payload: payload
     };
-}
+};
 
-export function getUserCourses() {
-    return function(dispatch) {
+
+export const getUserCourses = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         if (token) {
             axios.get(EduUrls.USER_COURSES, {
@@ -52,17 +56,18 @@ export function getUserCourses() {
             });
         }
     };
-}
+};
 
-export function addUserCourse(formValues, dispatch, props) {
-    return function(dispatch) {
+
+export const addUserCourse = (formValues) => {
+    return () => {
         const token = getUserToken(store.getState());
         if (token) {
             return axios.patch( `${EduUrls.ADD_COURSE}${formValues}/`, {}, {
                 headers: {
                     Authorization: 'JWT ' + token
                 }
-            }).then(response => {
+            }).then(() => {
                 // redirect to the route '/my-courses'
                 history.push("/my-courses");
             }).catch((error) => {
@@ -70,17 +75,18 @@ export function addUserCourse(formValues, dispatch, props) {
             });
         }
     };
-}
+};
 
-export function removeUserCourse(formValues, dispatch, props) {
-    return function(dispatch) {
+
+export const removeUserCourse = (formValues) => {
+    return () => {
         const token = getUserToken(store.getState());
         if (token) {
             return axios.patch( `${EduUrls.REMOVE_COURSE}${formValues}/`, {}, {
                 headers: {
                     Authorization: 'JWT ' + token
                 }
-            }).then(response => {
+            }).then(() => {
                 // redirect to the route '/'
                 history.push("/");
             }).catch((error) => {
@@ -88,17 +94,19 @@ export function removeUserCourse(formValues, dispatch, props) {
             });
         }
     };
-}
+};
 
-function setCourseLessons(payload) {
+
+const setCourseLessons = (payload) => {
     return {
         type: EduTypes.COURSE_LESSONS,
         payload: payload
     };
-}
+};
 
-export function getCourseLessons() {
-    return function(dispatch) {
+
+export const getCourseLessons = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         const course_pk = localStorage.getItem("course");
         if (token) {
@@ -113,18 +121,19 @@ export function getCourseLessons() {
             });
         }
     };
-}
+};
 
 
-function setCourseTeachers(payload) {
+const setCourseTeachers = (payload) => {
     return {
         type: EduTypes.COURSE_TEACHERS,
         payload: payload
     };
-}
+};
 
-export function getCourseTeachers() {
-    return function(dispatch) {
+
+export const getCourseTeachers = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         const course_pk = localStorage.getItem("course");
         if (token) {
@@ -139,17 +148,19 @@ export function getCourseTeachers() {
             });
         }
     };
-}
+};
 
-function setHomeworks(payload) {
+
+const setHomeworks = (payload) => {
     return {
         type: EduTypes.HOMEWORKS,
         payload: payload
     };
-}
+};
 
-export function getHomeworks() {
-    return function(dispatch) {
+
+export const getHomeworks = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         const course_pk = localStorage.getItem("course");
         if (token) {
@@ -164,18 +175,18 @@ export function getHomeworks() {
             });
         }
     };
-}
+};
 
 
-function setHomework(payload) {
+const setHomework = (payload) => {
     return {
         type: EduTypes.HOMEWORK,
         payload: payload
     };
-}
+};
 
 
-export function getHomework() {
+export const getHomework = () => {
     return function(dispatch) {
         const token = getUserToken(store.getState());
         const homework_pk = localStorage.getItem("homework");
@@ -191,10 +202,10 @@ export function getHomework() {
             });
         }
     };
-}
+};
 
 
-export function sendHomework(formValues, dispatch, props) {
+export const sendHomework = (formValues, dispatch) => {
     const token = getUserToken(store.getState());
     const homework_pk = localStorage.getItem("homework");
     return axios.patch(`${EduUrls.HOMEWORK}${homework_pk}/`, formValues, {
@@ -210,4 +221,4 @@ export function sendHomework(formValues, dispatch, props) {
             // Show an error to the user
             console.log(error);
         });
-}
+};

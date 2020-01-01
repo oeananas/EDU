@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { reduxForm, Field, propTypes } from "redux-form";
 import { required } from "redux-form-validators"
-
 import { renderField, renderError} from "../../utils/renderUtils";
 import { resetPassword } from "../../actions/authActions";
+
 
 class PasswordReset extends Component {
 
@@ -11,7 +11,7 @@ class PasswordReset extends Component {
         ...propTypes
     };
 
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (

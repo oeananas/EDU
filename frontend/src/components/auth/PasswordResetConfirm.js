@@ -4,13 +4,14 @@ import { required } from "redux-form-validators"
 import { confirmPasswordChange } from "../../actions/authActions";
 import { renderField, renderError } from "../../utils/renderUtils";
 
+
 class PasswordResetConfirm extends Component {
 
     static propTypes = {
         ...propTypes
     };
 
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (
@@ -45,7 +46,7 @@ class PasswordResetConfirm extends Component {
 }
 
 // Sync field level validation for password match
-const validateForm = values => {
+const validateForm = (values) => {
     const errors = {};
     const { new_password1, new_password2 } = values;
     if (new_password1 !== new_password2) {

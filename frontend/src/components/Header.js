@@ -9,7 +9,7 @@ class Header extends Component {
         authenticated: PropTypes.bool
     };
 
-    renderLinks() {
+    renderLinks = () => {
         if (this.props.authenticated) {
             return (
                 [
@@ -37,9 +37,9 @@ class Header extends Component {
                 ]
             );
         }
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <Link to="/" className="navbar-brand">EDU</Link>
@@ -51,9 +51,10 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         authenticated: state.auth.authenticated
     }
-}
+};
+
 export default connect(mapStateToProps)(Header);

@@ -1,5 +1,6 @@
 import { AuthTypes } from "../constants/actionTypes";
 
+
 const authReducer = (state = {}, action) => {
     // eslint-disable-next-line default-case
     switch(action.type) {

@@ -3,35 +3,38 @@ import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 
-export default function(ComposedComponent) {
+
+export default (ComposedComponent) => {
+
     class Authentication extends Component {
 
         static propTypes = {
             history: PropTypes.object
         };
 
-        componentDidMount() {
+        componentDidMount = () => {
             this.checkAuthentication(this.props);
 
-        }
+        };
 
-        componentDidUpdate(nextProps) {
+        componentDidUpdate = (nextProps) => {
             this.checkAuthentication(nextProps);
-        }
+        };
 
-        checkAuthentication(props) {
+        checkAuthentication = (props) => {
             if (!props.authenticated) {
                 this.props.history.push("/login");
             }
-        }
+        };
 
-        render() {
+        render = () => {
             return <ComposedComponent {...this.props} />
         }
     }
 
-    function mapStateToProps(state) {
+    const mapStateToProps = (state) => {
         return { authenticated: state.auth.authenticated }
-    }
+    };
+
     return withRouter(connect(mapStateToProps)(Authentication));
 }

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
 import { reduxForm, Field, propTypes } from "redux-form";
 import { required } from "redux-form-validators"
 import { renderField, renderError } from "../../utils/renderUtils";
 import { signupUser } from "../../actions/authActions";
+
 
 class Signup extends Component {
 
@@ -11,8 +11,7 @@ class Signup extends Component {
         ...propTypes
     };
 
-
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (
@@ -59,7 +58,7 @@ class Signup extends Component {
 }
 
 // Sync field level validation for password match
-const validateForm = values => {
+const validateForm = (values) => {
     const errors = {};
     const { password1, password2 } = values;
     if (password1 !== password2) {

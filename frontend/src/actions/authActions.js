@@ -7,14 +7,16 @@ import { AuthUrls } from "../constants/urls";
 import store from "../store";
 import { getUserToken } from "../utils/authUtils";
 
-export function authLogin(token) {
+
+export const authLogin = (token) => {
     return {
         type: AuthTypes.LOGIN,
         payload: token
     };
-}
+};
 
-export function loginUser(formValues, dispatch, props) {
+
+export const loginUser = (formValues, dispatch) => {
     const loginUrl = AuthUrls.LOGIN;
 
     return axios.post(loginUrl, formValues).then((response) => {
@@ -31,20 +33,22 @@ export function loginUser(formValues, dispatch, props) {
         const processedError = processServerError(error.response.data);
         throw new SubmissionError(processedError);
     });
-}
+};
 
-export function logoutUser() {
+
+export const logoutUser = () => {
     localStorage.removeItem("token");
     return {
         type: AuthTypes.LOGOUT
     };
-}
+};
 
-export function signupUser(formValues, dispatch, props) {
+
+export const signupUser = (formValues) => {
     const signupUrl = AuthUrls.SIGNUP;
 
     return axios.post(signupUrl, formValues)
-        .then((response) => {
+        .then(() => {
             history.push("/signup_done");
         })
         .catch((error) => {
@@ -53,24 +57,26 @@ export function signupUser(formValues, dispatch, props) {
             const processedError = processServerError(error.response.data);
             throw new SubmissionError(processedError);
         });
-}
+};
 
-function setUserProfile(payload) {
+
+const setUserProfile = (payload) => {
     return {
         type: AuthTypes.USER_PROFILE,
         payload: payload
     };
-}
+};
 
-export function getUserProfile() {
-    return function(dispatch) {
+
+export const getUserProfile = () => {
+    return (dispatch) => {
         const token = getUserToken(store.getState());
         if (token) {
             axios.get(AuthUrls.USER_PROFILE, {
                 headers: {
                     Authorization: 'JWT ' + token
                 }
-            }).then(response => {
+            }).then((response) => {
                 const user = response.data;
                 dispatch(setUserProfile(user));
             }).catch((error) => {
@@ -79,9 +85,10 @@ export function getUserProfile() {
             });
         }
     };
-}
+};
 
-export function changePassword(formValues, dispatch, props) {
+
+export const changePassword = (formValues) => {
     const changePasswordUrl = AuthUrls.CHANGE_PASSWORD;
     const token = getUserToken(store.getState());
 
@@ -91,7 +98,7 @@ export function changePassword(formValues, dispatch, props) {
                 Authorization: 'JWT ' + token
             }
         })
-            .then((response) => {
+            .then(() => {
                 history.push("/profile");
             })
             .catch((error) => {
@@ -101,13 +108,14 @@ export function changePassword(formValues, dispatch, props) {
                 throw new SubmissionError(processedError);
             });
     }
-}
+};
 
-export function resetPassword(formValues, dispatch, props) {
+
+export const resetPassword = (formValues) => {
     const resetPasswordUrl = AuthUrls.RESET_PASSWORD;
 
     return axios.post(resetPasswordUrl, formValues)
-        .then(response => {
+        .then(() => {
             // redirect to reset done page
             history.push("/reset_password_done");
         }).catch((error) => {
@@ -116,15 +124,16 @@ export function resetPassword(formValues, dispatch, props) {
             const processedError = processServerError(error.response.data);
             throw new SubmissionError(processedError);
         });
-}
+};
 
-export function confirmPasswordChange(formValues, dispatch, props) {
+
+export const confirmPasswordChange = (formValues, dispatch, props) => {
     const { uid, token } = props.match.params;
     const resetPasswordConfirmUrl = AuthUrls.RESET_PASSWORD_CONFIRM;
     const data = Object.assign(formValues, { uid, token });
 
     return axios.post(resetPasswordConfirmUrl, data)
-        .then(response => {
+        .then(() => {
             history.push("/login");
         }).catch((error) => {
             // If request is bad...
@@ -132,15 +141,16 @@ export function confirmPasswordChange(formValues, dispatch, props) {
             const processedError = processServerError(error.response.data);
             throw new SubmissionError(processedError);
         });
-}
+};
 
-export function activateUserAccount(formValues, dispatch, props) {
+
+export const activateUserAccount = (formValues, dispatch, props) => {
     const { key } = props.match.params;
     const activateUserUrl = AuthUrls.USER_ACTIVATION;
     const data = Object.assign(formValues, { key });
 
     return axios.post(activateUserUrl, data)
-        .then(response => {
+        .then(() => {
             history.push("/login");
         }).catch((error) => {
             // If request is bad...
@@ -148,9 +158,10 @@ export function activateUserAccount(formValues, dispatch, props) {
             const processedError = processServerError(error.response.data);
             throw new SubmissionError(processedError);
         });
-}
+};
 
-export function updateUserProfile(formValues, dispatch, props) {
+
+export const updateUserProfile = (formValues) => {
     const token = getUserToken(store.getState());
 
     return axios.patch(AuthUrls.USER_PROFILE, formValues, {
@@ -158,7 +169,7 @@ export function updateUserProfile(formValues, dispatch, props) {
             Authorization: 'JWT ' + token
         }
     })
-        .then(response => {
+        .then(() => {
             history.push("/profile");
         }).catch((error) => {
             // If request is bad...
@@ -166,10 +177,12 @@ export function updateUserProfile(formValues, dispatch, props) {
             const processedError = processServerError(error.response.data);
             throw new SubmissionError(processedError);
         });
-}
+};
+
+
 // util functions
-function processServerError(error) {
-    return  Object.keys(error).reduce(function(newDict, key) {
+const processServerError = (error) => {
+    return  Object.keys(error).reduce((newDict, key) => {
         if (key === "non_field_errors") {
             newDict["_error"].push(error[key]);
         } else if (key === "token") {
@@ -181,4 +194,4 @@ function processServerError(error) {
 
         return newDict
     }, {"_error": []});
-}
+};

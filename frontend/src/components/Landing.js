@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import { getCourses, getUserCourses, addUserCourse } from "../actions/eduActions";
 
+
 class Landing extends Component {
 
     static propTypes = {
@@ -15,13 +16,12 @@ class Landing extends Component {
         addUserCourse: PropTypes.func.isRequired
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getUserCourses();
         this.props.getCourses();
-    }
+    };
 
-
-    renderAddButton(item) {
+    renderAddButton = (item) => {
         const user_courses = this.props.user_courses;
         if (user_courses) {
             if (!user_courses.some(element => element.id === item.id)) {
@@ -34,9 +34,9 @@ class Landing extends Component {
                 )
             }
         }
-    }
+    };
 
-    renderCourses() {
+    renderCourses = () => {
         const courses = this.props.courses;
         if (courses) {
             return (
@@ -54,9 +54,9 @@ class Landing extends Component {
             );
         }
         return null;
-    }
+    };
 
-    renderLanding() {
+    renderLanding = () => {
         if (this.props.authenticated) {
             if (this.props.courses) {
                 return (
@@ -77,9 +77,9 @@ class Landing extends Component {
                 <h1>You need to Log In or Sign Up</h1>
             );
         }
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <div className="text-center">
                 {this.renderLanding()}
@@ -88,12 +88,12 @@ class Landing extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         authenticated: state.auth.authenticated,
         user_courses: state.edu.user_courses,
         courses: state.edu.courses,
     }
-}
+};
 
 export default connect(mapStateToProps, { getUserCourses, getCourses, addUserCourse } )(Landing);

@@ -12,11 +12,11 @@ class Homework extends Component {
         homeworks: PropTypes.array,
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getHomeworks();
-    }
+    };
 
-    renderHomeworks() {
+    renderHomeworks = () => {
         const homeworks = this.props.homeworks;
         if (homeworks) {
             return (
@@ -48,9 +48,9 @@ class Homework extends Component {
             );
         }
         return null;
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <div>
                 <h1 className="m-4">Homework</h1>
@@ -60,10 +60,10 @@ class Homework extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         homeworks: state.edu.homeworks
     }
-}
+};
 
 export default connect(mapStateToProps, {getHomeworks})(Homework);

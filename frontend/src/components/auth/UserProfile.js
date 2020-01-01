@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUserProfile } from "../../actions/authActions";
 
+
 class UserProfile extends Component {
 
     static propTypes = {
@@ -11,11 +12,11 @@ class UserProfile extends Component {
         user: PropTypes.object
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getUserProfile();
-    }
+    };
 
-    renderUser() {
+    renderUser = () => {
         const user = this.props.user;
         if (user) {
             return (
@@ -27,9 +28,9 @@ class UserProfile extends Component {
             );
         }
         return null;
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <div className="text-center">
                 {this.renderUser()}
@@ -43,10 +44,10 @@ class UserProfile extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         user: state.auth.user
     }
-}
+};
 
 export default connect(mapStateToProps, { getUserProfile } )(UserProfile);

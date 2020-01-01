@@ -11,11 +11,11 @@ class CourseLessons extends Component {
         course_lessons: PropTypes.array,
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getCourseLessons();
-    }
+    };
 
-    renderLessons() {
+    renderLessons = () => {
         const course_lessons = this.props.course_lessons;
         if (course_lessons) {
             return (
@@ -34,9 +34,9 @@ class CourseLessons extends Component {
             );
         }
         return null;
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <div>
                 <h1 className="m-4">Lessons</h1>
@@ -47,10 +47,10 @@ class CourseLessons extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         course_lessons: state.edu.course_lessons
     }
-}
+};
 
 export default connect(mapStateToProps, { getCourseLessons } )(CourseLessons);

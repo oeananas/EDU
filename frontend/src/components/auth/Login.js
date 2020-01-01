@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-// import PropTypes from "prop-types";
 import { reduxForm, Field, propTypes } from "redux-form";
 import { Link } from "react-router-dom";
 import { required } from "redux-form-validators"
-
 import { renderField, renderError} from "../../utils/renderUtils";
 import { loginUser } from "../../actions/authActions";
+
 
 class Login extends Component {
 
@@ -13,7 +12,7 @@ class Login extends Component {
         ...propTypes
     };
 
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (

@@ -14,11 +14,11 @@ class Solution extends Component {
         homework: PropTypes.object,
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getHomework();
-    }
+    };
 
-    getHomework() {
+    getHomework = () => {
         const { handleSubmit, error } = this.props;
         const homework = this.props.homework;
         if (homework) {
@@ -42,8 +42,7 @@ class Solution extends Component {
         return null;
     }
 
-    render() {
-
+    render = () => {
         return (
             <div>
                 <h1 className="m-4">Solution</h1>
@@ -54,12 +53,12 @@ class Solution extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         homework: state.edu.homework,
         initialValues: {'solution': localStorage.getItem('solution')}
     }
-}
+};
 
 export default connect(mapStateToProps, { getHomework } )(reduxForm({
     form: "update_homework",

@@ -20,6 +20,7 @@ import CourseTeachers from "./edu/CourseTeachers";
 import Homework from "./edu/Homework";
 import Solution from "./edu/Solution";
 
+
 const MainContent = () => (
     <div>
         <Switch>

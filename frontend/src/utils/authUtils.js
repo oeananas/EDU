@@ -1,7 +1,7 @@
-export function getUserToken(state) {
+export const getUserToken = (state) => {
     return state.auth.token;
-}
+};
 
-export function getUser(state) {
+export const getUser = (state) => {
     return state.auth.user
-}
+};

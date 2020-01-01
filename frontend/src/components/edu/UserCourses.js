@@ -21,11 +21,11 @@ class UserCourses extends Component {
         removeUserCourse: PropTypes.func.isRequired
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.getUserCourses();
-    }
+    };
 
-    renderCourses() {
+    renderCourses = () => {
         const courses = this.props.user_courses;
         if (courses) {
             return (
@@ -53,7 +53,7 @@ class UserCourses extends Component {
         return null;
     }
 
-    render() {
+    render = () => {
         return (
             <div>
                 <h1 className="m-4">My courses</h1>

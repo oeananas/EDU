@@ -3,13 +3,14 @@ import { reduxForm, propTypes } from "redux-form";
 import { activateUserAccount } from "../../actions/authActions";
 import { renderError } from "../../utils/renderUtils";
 
+
 class AccountActivation extends Component {
 
     static propTypes = {
         ...propTypes
     };
 
-    render() {
+    render = () => {
         const { handleSubmit, error } = this.props;
 
         return (

@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
+
 class Logout extends Component {
 
     static propTypes = {
         logoutUser: PropTypes.func.isRequired
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.logoutUser();
-    }
+    };
 
-    render() {
+    render = () => {
         return (
             <h2 className="text-center">See you soon...</h2>
         );
