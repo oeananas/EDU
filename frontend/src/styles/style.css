@@ -2,3 +2,7 @@
     font-size: 24px;
     text-decoration-line: underline;
 }
+
+body {
+    background-image: url("../img/body.jpg");
+}

@@ -50,7 +50,7 @@ class Landing extends Component {
             return (
                 <div className="container">
                         {courses.map(item => (
-                            <div className="card m-4" key={item.id}>
+                            <div className="card-transparent m-4" key={item.id}>
                                 <div className="card-body">
                                     <h5 className="card-title"><strong>{item.title}</strong> ({item.price} $)</h5>
                                     <p>{item.description}</p>
