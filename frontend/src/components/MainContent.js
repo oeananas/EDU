@@ -17,7 +17,8 @@ import UserCourses from "./edu/UserCourses";
 import NoMatch from "./NoMatch";
 import CourseLessons from "./edu/CourseLessons";
 import CourseTeachers from "./edu/CourseTeachers";
-import Homework from "./edu/Homework";
+import CourseHomework from "./edu/CourseHomework";
+import StudentHomework from "./edu/StudentHomework";
 import Solution from "./edu/Solution";
 import Progress from "./edu/Progress";
 
@@ -40,7 +41,8 @@ const MainContent = () => (
             <Route path="/my-courses" component={RequireAuth(UserCourses)}/>
             <Route path="/course-lessons" component={RequireAuth(CourseLessons)}/>
             <Route path="/course-teachers" component={RequireAuth(CourseTeachers)}/>
-            <Route path="/course-my-homework" component={RequireAuth(Homework)}/>
+            <Route path="/course-my-homework" component={RequireAuth(CourseHomework)}/>
+            <Route path="/student-homework" component={RequireAuth(StudentHomework)}/>
             <Route path="/my-homework" component={RequireAuth(Solution)}/>
             <Route path="/progress" component={RequireAuth(Progress)}/>
             <Route component={NoMatch}/>

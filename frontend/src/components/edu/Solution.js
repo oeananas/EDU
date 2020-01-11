@@ -40,7 +40,7 @@ class Solution extends Component {
             );
         }
         return null;
-    }
+    };
 
     render = () => {
         return (

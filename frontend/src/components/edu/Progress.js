@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {getProgress} from "../../actions/eduActions";
+import {Link} from "react-router-dom";
 
 
 class Progress extends Component {
@@ -30,6 +31,7 @@ class Progress extends Component {
                             <th scope="col">Done homework</th>
                             <th scope="col">Ready Homework</th>
                             <th scope="col">All Homework</th>
+                            <th scope="col">Details</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,6 +44,7 @@ class Progress extends Component {
                                 <td>{item.done_homework}</td>
                                 <td>{item.ready_homework}</td>
                                 <td>{item.all_homework}</td>
+                                <td><Link onClick={() => localStorage.setItem("student", item.id)} className="btn btn-sm btn-outline-success" to="/student-homework">Show</Link></td>
                             </tr>
                         ))}
                         </tbody>

@@ -1,6 +1,5 @@
 from django.db.models import F
 from rest_framework import viewsets
-from rest_framework.response import Response
 
 from users.models import Student
 from .models import (
@@ -13,38 +12,28 @@ from .serializers import (
     LessonSerializer,
     HomeworkSerializer
 )
-from utils.view_set_utils import get_custom_list
+from utils.view_set_utils import (
+    get_custom_list,
+    patch_data
+)
 
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
-    def patch_data(self, request, data, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
-
-        return Response(serializer.data)
-
     def user_add(self, request, *args, **kwargs):
         student = Student.objects.get(user=request.user.id)
         data = {
             'students': [student.id]
         }
-        return self.patch_data(request, data, *args, **kwargs)
+        return patch_data(self, request, data, *args, **kwargs)
 
     def user_remove(self, request, *args, **kwargs):
         data = {
             'students': [student for student in self.get_object().students.exclude(user=request.user.pk)]
         }
-        return self.patch_data(request, data, *args, **kwargs)
+        return patch_data(self, request, data, *args, **kwargs)
 
     def student_list(self, request, *args, **kwargs):
         queryset = Course.objects.filter(students__user=request.user.id)
@@ -71,9 +60,22 @@ class HomeworkViewSet(viewsets.ModelViewSet):
     queryset = Homework.objects.all()
     serializer_class = HomeworkSerializer
 
-    def homework_list(self, request, *args, **kwargs):
+    def course_homework_list(self, request, *args, **kwargs):
         queryset = Homework.objects\
             .select_related('lesson')\
             .filter(student__user=request.user.pk, lesson__course_id=kwargs['pk'])\
             .annotate(lesson_name=F('lesson__title'))
         return get_custom_list(self, queryset)
+
+    def student_homework_list(self, request, *args, **kwargs):
+        queryset = Homework.objects\
+            .select_related('lesson')\
+            .filter(lesson__teacher__user=request.user.pk, student=kwargs['pk'])\
+            .annotate(lesson_name=F('lesson__title'))
+        return get_custom_list(self, queryset)
+
+    def set_done_homework(self, request, *args, **kwargs):
+        data = {
+            'is_done': True
+        }
+        return patch_data(self, request, data, *args, **kwargs)

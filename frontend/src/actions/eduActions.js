@@ -151,7 +151,7 @@ export const getCourseTeachers = () => {
 };
 
 
-const setHomeworks = (payload) => {
+const setCourseHomeworks = (payload) => {
     return {
         type: EduTypes.COURSE_HOMEWORK,
         payload: payload
@@ -159,7 +159,7 @@ const setHomeworks = (payload) => {
 };
 
 
-export const getHomeworks = () => {
+export const getCourseHomeworks = () => {
     return (dispatch) => {
         const token = getUserToken(store.getState());
         const course_pk = localStorage.getItem("course");
@@ -169,13 +169,60 @@ export const getHomeworks = () => {
                     Authorization: 'JWT ' + token
                 }
             }).then(response => {
-                dispatch(setHomeworks(response.data));
+                dispatch(setCourseHomeworks(response.data));
             }).catch((error) => {
                 console.log(error);
             });
         }
     };
 };
+
+
+const setStudentHomeworks = (payload) => {
+    return {
+        type: EduTypes.STUDENT_HOMEWORK,
+        payload: payload
+    };
+};
+
+
+export const getStudentHomeworks = () => {
+    return (dispatch) => {
+        const token = getUserToken(store.getState());
+        const student_pk = localStorage.getItem("student");
+        if (token) {
+            axios.get(`${EduUrls.STUDENT_HOMEWORK}${student_pk}/`, {
+                headers: {
+                    Authorization: 'JWT ' + token
+                }
+            }).then(response => {
+                dispatch(setStudentHomeworks(response.data));
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    };
+};
+
+
+export const setDoneHomework = (formValues) => {
+    return () => {
+        const token = getUserToken(store.getState());
+        if (token) {
+            return axios.patch( `${EduUrls.SET_DONE_HOMEWORK}${formValues}/`, {}, {
+                headers: {
+                    Authorization: 'JWT ' + token
+                }
+            }).then(() => {
+                // redirect to the route '/student-homework'
+                window.location.reload();
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    };
+};
+
 
 
 const setHomework = (payload) => {

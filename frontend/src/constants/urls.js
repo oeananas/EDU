@@ -19,6 +19,8 @@ export const EduUrls = {
     COURSE_LESSONS: `${ROOT_URL}training/lessons/course/`,
     COURSE_TEACHERS: `${ROOT_URL}users/teachers/course/`,
     COURSE_HOMEWORK: `${ROOT_URL}training/my-homework/course/`,
+    STUDENT_HOMEWORK: `${ROOT_URL}training/homework/student/`,
     HOMEWORK: `${ROOT_URL}training/my-homework/`,
     PROGRESS: `${ROOT_URL}users/progress/`,
+    SET_DONE_HOMEWORK: `${ROOT_URL}training/set-done-homework/`,
 };

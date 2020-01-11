@@ -1,22 +1,22 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getHomeworks} from "../../actions/eduActions";
+import {getCourseHomeworks} from "../../actions/eduActions";
 import { Link } from "react-router-dom";
 
 
-class Homework extends Component {
+class CourseHomework extends Component {
 
     static propTypes = {
-        getHomeworks: PropTypes.func.isRequired,
+        getCourseHomeworks: PropTypes.func.isRequired,
         course_homework: PropTypes.array,
     };
 
     componentDidMount = () => {
-        this.props.getHomeworks();
+        this.props.getCourseHomeworks();
     };
 
-    renderHomeworks = () => {
+    renderCourseHomeworks = () => {
         const course_homework = this.props.course_homework;
         if (course_homework) {
             return (
@@ -54,7 +54,7 @@ class Homework extends Component {
         return (
             <div>
                 <h1 className="m-4">Homework</h1>
-                {this.renderHomeworks()}
+                {this.renderCourseHomeworks()}
             </div>
         );
     }
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {getHomeworks})(Homework);
+export default connect(mapStateToProps, {getCourseHomeworks})(CourseHomework);
