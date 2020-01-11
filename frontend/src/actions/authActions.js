@@ -43,6 +43,7 @@ export const loginUser = (formValues, dispatch) => {
                     dispatch(authTeacher(isTeacher));
                     // redirect to the route '/'
                     history.push("/");
+                    window.location.reload();
                 })
         })
         .catch(error => {
