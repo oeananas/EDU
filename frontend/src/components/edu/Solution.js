@@ -32,7 +32,7 @@ class Solution extends Component {
                         </fieldset>
                         <fieldset className="form-group">
                             { renderError(error) }
-                            <Link className='m-2 btn btn-outline-secondary' to='/my-homeworks'>Back</Link>
+                            <Link className='m-2 btn btn-outline-secondary' to='/course-my-homework'>Back</Link>
                             <button type="submit" className="btn btn-primary">Save</button>
                         </fieldset>
                     </form>

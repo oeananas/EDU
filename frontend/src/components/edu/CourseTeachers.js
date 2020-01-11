@@ -20,18 +20,30 @@ class CourseTeachers extends Component {
         if (course_teachers) {
             return (
                 <div className="container text-center">
-                    {course_teachers.map(item => (
-                        <div className="m-4" key={item.id}>
-                            <div className="row">
-                                <div className="col-4">
-                                    <h5><strong>{item.name} ({item.age} years)</strong></h5>
-                                </div>
-                                <div className="col-8">
-                                    <p>{item.skill_info}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Skill Info</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {course_teachers.map(item => (
+                            <tr key={item.id}>
+                                <td>{item.first_name}</td>
+                                <td>{item.last_name}</td>
+                                <td>{item.username}</td>
+                                <td>{item.email}</td>
+                                <td>{item.age}</td>
+                                <td>{item.skill_info}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
             );
         }

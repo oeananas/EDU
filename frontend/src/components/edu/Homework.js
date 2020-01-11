@@ -9,7 +9,7 @@ class Homework extends Component {
 
     static propTypes = {
         getHomeworks: PropTypes.func.isRequired,
-        homeworks: PropTypes.array,
+        course_homework: PropTypes.array,
     };
 
     componentDidMount = () => {
@@ -17,8 +17,8 @@ class Homework extends Component {
     };
 
     renderHomeworks = () => {
-        const homeworks = this.props.homeworks;
-        if (homeworks) {
+        const course_homework = this.props.course_homework;
+        if (course_homework) {
             return (
                 <div className="container text-center">
                     <table className="table">
@@ -31,7 +31,7 @@ class Homework extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {homeworks.map(item => (
+                        {course_homework.map(item => (
                             <tr key={item.id}>
                                 <th scope="row">{item.lesson_name}</th>
                                 <td>{item.is_done.toString()}</td>
@@ -62,7 +62,7 @@ class Homework extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        homeworks: state.edu.homeworks
+        course_homework: state.edu.course_homework
     }
 };
 

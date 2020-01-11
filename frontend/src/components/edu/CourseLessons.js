@@ -20,16 +20,26 @@ class CourseLessons extends Component {
         if (course_lessons) {
             return (
                 <div className="container text-center">
-                    {course_lessons.map(item => (
-                        <div className="card m-4" key={item.id}>
-                            <div className="card-body">
-                                <h5 className="card-title m-2"><strong>{item.title}</strong></h5>
-                                <p>{item.description}</p>
-                                <p>Teacher: {item.teacher_name}</p>
-                                <p>Start: {item.start_dt}</p>
-                            </div>
-                        </div>
-                    ))}
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Lesson</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Teacher</th>
+                            <th scope="col">Start date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {course_lessons.map(item => (
+                            <tr key={item.id}>
+                                <td><strong>{item.title}</strong></td>
+                                <td>{item.description}</td>
+                                <td>{item.teacher_first_name} {item.teacher_last_name} [{item.teacher_username}]</td>
+                                <td>{item.start_dt}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
             );
         }

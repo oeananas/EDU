@@ -8,13 +8,19 @@ import { Provider } from "react-redux";
 import store from "./store";
 import history from "./utils/historyUtils";
 import { authLogin } from "./actions/authActions";
+import { authTeacher } from "./actions/authActions";
 import App from "./components/App";
 
 
 const token = localStorage.getItem("token");
+const isTeacher = localStorage.getItem("is_teacher");
 
 if (token) {
     store.dispatch(authLogin(token));
+}
+
+if (isTeacher) {
+    store.dispatch(authTeacher(isTeacher));
 }
 
 ReactDOM.render(

@@ -16,12 +16,20 @@ class UserProfile extends Component {
         this.props.getUserProfile();
     };
 
+    renderUserTeacher = () => {
+        const isTeacher = localStorage.getItem('is_teacher');
+        if (isTeacher === 'true') {
+            return <span className="text-muted">[teacher]</span>
+        }
+        return null
+    };
+
     renderUser = () => {
         const user = this.props.user;
         if (user) {
             return (
                 <div className="container">
-                    <h1>[{user.username}] Profile</h1>
+                    <h1>[{user.username}] Profile {this.renderUserTeacher()}</h1>
                     <p><small className="text-muted">Name: {user.first_name} {user.last_name}</small></p>
                     <p><small className="text-muted">Email: {user.email}</small></p>
                 </div>
@@ -38,7 +46,6 @@ class UserProfile extends Component {
                 <hr />
                 <Link className="btn btn-outline-primary mr-2" to="/profile_edit">Update Profile</Link>
                 <Link className="btn btn-outline-warning mr-2" to="/change_password">Change Password</Link>
-                <Link className="btn btn-outline-success" to="/my-courses">My courses</Link>
             </div>
         );
     }

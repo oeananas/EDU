@@ -11,6 +11,7 @@ class CustomNode(relay.Node):
     """
     need to work with non-encoded IDs
     """
+
     class Meta:
         name = 'Node'
 
@@ -52,7 +53,6 @@ class TeacherType(DjangoObjectType):
         model = Teacher
         filter_fields = {
             'id': ['exact'],
-            'name': ['exact', 'icontains', 'istartswith'],
             'skill_info': ['exact', 'icontains', 'istartswith'],
         }
         interfaces = (CustomNode,)
@@ -82,5 +82,3 @@ class Query:
     def resolve_teacher(self, info, **kwargs):
         if 'id' in kwargs:
             return Teacher.objects.get(id=kwargs['id'])
-        if 'name' in kwargs:
-            return Teacher.objects.get(name=kwargs['name'])

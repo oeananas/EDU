@@ -1,16 +1,9 @@
 from django.contrib.auth.models import User
+from users.models import (
+    Teacher,
+    Student
+)
 from django.db import models
-
-
-class Teacher(models.Model):
-    name = models.CharField(max_length=100)
-    age = models.PositiveIntegerField()
-    skill_info = models.TextField()
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.name
 
 
 class Course(models.Model):
@@ -19,7 +12,7 @@ class Course(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     teachers = models.ManyToManyField(Teacher, related_name='courses', default=[])
-    students = models.ManyToManyField(User, related_name='courses', blank=True, default=[])
+    students = models.ManyToManyField(Student, related_name='courses', blank=True, default=[])
 
     objects = models.Manager()
 
@@ -44,7 +37,7 @@ class Lesson(models.Model):
 
 
 class Homework(models.Model):
-    student = models.ForeignKey(User, related_name='home_works', on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, related_name='home_works', on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     solution = models.TextField(blank=True, null=True)
     lesson = models.ForeignKey(Lesson, related_name='home_works', on_delete=models.CASCADE)

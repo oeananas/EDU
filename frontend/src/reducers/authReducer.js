@@ -10,6 +10,8 @@ const authReducer = (state = {}, action) => {
             return { ...state, authenticated: false, token: null};
         case AuthTypes.USER_PROFILE:
             return { ...state, user: action.payload};
+        case AuthTypes.IS_TEACHER:
+            return { ...state, isTeacher: action.payload};
     }
     return state;
 };

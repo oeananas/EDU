@@ -15,29 +15,46 @@ export const authLogin = (token) => {
     };
 };
 
+export const authTeacher = (isTeacher) => {
+    return {
+        type: AuthTypes.IS_TEACHER,
+        payload: isTeacher
+    };
+};
 
 export const loginUser = (formValues, dispatch) => {
     const loginUrl = AuthUrls.LOGIN;
+    const isTeacherUrl = AuthUrls.IS_TEACHER;
 
-    return axios.post(loginUrl, formValues).then((response) => {
-        // If request is good...
-        // Update state to indicate user is authenticated
-        const token = response.data.token;
-        dispatch(authLogin(token));
+    return axios.post(loginUrl, formValues)
+        .then((response) => {
+            // If request is good...
+            // Update state to indicate user is authenticated
+            const token = response.data.token;
+            dispatch(authLogin(token));
 
-        localStorage.setItem("token", token);
-
-        // redirect to the route '/'
-        history.push("/");
-    }).catch(error => {
-        const processedError = processServerError(error.response.data);
-        throw new SubmissionError(processedError);
-    });
+            localStorage.setItem("token", token);
+        })
+        .then(() => {
+            return axios.post(isTeacherUrl, formValues)
+                .then((response) => {
+                    const isTeacher = response.data.is_teacher;
+                    localStorage.setItem('is_teacher', isTeacher);
+                    dispatch(authTeacher(isTeacher));
+                    // redirect to the route '/'
+                    history.push("/");
+                })
+        })
+        .catch(error => {
+            const processedError = processServerError(error.response.data);
+            throw new SubmissionError(processedError);
+        });
 };
 
 
 export const logoutUser = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("is_teacher");
     return {
         type: AuthTypes.LOGOUT
     };

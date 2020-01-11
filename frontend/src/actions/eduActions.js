@@ -153,7 +153,7 @@ export const getCourseTeachers = () => {
 
 const setHomeworks = (payload) => {
     return {
-        type: EduTypes.HOMEWORKS,
+        type: EduTypes.COURSE_HOMEWORK,
         payload: payload
     };
 };
@@ -164,7 +164,7 @@ export const getHomeworks = () => {
         const token = getUserToken(store.getState());
         const course_pk = localStorage.getItem("course");
         if (token) {
-            axios.get(`${EduUrls.HOMEWORKS}${course_pk}/`, {
+            axios.get(`${EduUrls.COURSE_HOMEWORK}${course_pk}/`, {
                 headers: {
                     Authorization: 'JWT ' + token
                 }
@@ -215,10 +215,36 @@ export const sendHomework = (formValues, dispatch) => {
     })
         .then(response => {
             dispatch(setHomework(response.data));
-            history.push('/my-homeworks');
+            history.push('/course-my-homework');
         }).catch((error) => {
             // If request is bad...
             // Show an error to the user
             console.log(error);
         });
+};
+
+
+const setProgress = (payload) => {
+    return {
+        type: EduTypes.PROGRESS,
+        payload: payload
+    };
+};
+
+
+export const getProgress = () => {
+    return function(dispatch) {
+        const token = getUserToken(store.getState());
+        if (token) {
+            axios.get(`${EduUrls.PROGRESS}`, {
+                headers: {
+                    Authorization: 'JWT ' + token
+                }
+            }).then(response => {
+                dispatch(setProgress(response.data));
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    };
 };

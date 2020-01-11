@@ -14,3 +14,4 @@ pytest-django==3.7.0
 coverage==5.0.2
 drf-yasg==1.17.0
 sentry-sdk==0.13.5
+ipython==7.11.1

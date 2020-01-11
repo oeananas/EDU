@@ -22,10 +22,6 @@ from rest_framework import routers
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from users.views import UserViewSet
-
-router = routers.DefaultRouter()
-router.register('user', UserViewSet,)
 
 
 schema_view = get_schema_view(
@@ -43,14 +39,14 @@ def trigger_error(request):
 
 
 urlpatterns = [
+    path('', include('django.contrib.auth.urls')),
     path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
     path('graphql/', GraphQLView.as_view(graphiql=True, schema=schema)),
     path('training/', include('training.urls')),
-    path('', include('django.contrib.auth.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    path('users/',  include(router.urls)),
+    path('users/',  include('users.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

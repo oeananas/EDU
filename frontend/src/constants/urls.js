@@ -7,7 +7,8 @@ export const AuthUrls = {
     RESET_PASSWORD: `${ROOT_URL}rest-auth/password/reset/`,
     RESET_PASSWORD_CONFIRM: `${ROOT_URL}rest-auth/password/reset/confirm/`,
     USER_ACTIVATION: `${ROOT_URL}rest-auth/registration/verify-email/`,
-    USER_PROFILE: `${ROOT_URL}rest-auth/user/`
+    USER_PROFILE: `${ROOT_URL}rest-auth/user/`,
+    IS_TEACHER: `${ROOT_URL}users/is-teacher/`,
 };
 
 export const EduUrls = {
@@ -15,8 +16,9 @@ export const EduUrls = {
     USER_COURSES: `${ROOT_URL}training/my-courses/`,
     ADD_COURSE: `${ROOT_URL}training/add-course-user/`,
     REMOVE_COURSE: `${ROOT_URL}training/remove-course-user/`,
-    COURSE_LESSONS: `${ROOT_URL}training/course/lessons/`,
-    COURSE_TEACHERS: `${ROOT_URL}training/course/teachers/`,
-    HOMEWORKS: `${ROOT_URL}training/my-homeworks/`,
+    COURSE_LESSONS: `${ROOT_URL}training/lessons/course/`,
+    COURSE_TEACHERS: `${ROOT_URL}users/teachers/course/`,
+    COURSE_HOMEWORK: `${ROOT_URL}training/my-homework/course/`,
     HOMEWORK: `${ROOT_URL}training/my-homework/`,
+    PROGRESS: `${ROOT_URL}users/progress/`,
 };

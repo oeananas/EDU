@@ -1,24 +1,19 @@
 from django.db.models import F
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .models import Course
-from .models import Lesson
-from .models import Teacher
-from .models import Homework
-from .serializers import CourseSerializer
-from .serializers import LessonSerializer
-from .serializers import TeacherSerializer
-from .serializers import HomeworkSerializer
 
-
-def get_custom_list(self, queryset):
-    page = self.paginate_queryset(queryset)
-    if page is not None:
-        serializer = self.get_serializer(page, many=True)
-        return self.get_paginated_response(serializer.data)
-
-    serializer = self.get_serializer(queryset, many=True)
-    return Response(serializer.data)
+from users.models import Student
+from .models import (
+    Course,
+    Lesson,
+    Homework
+)
+from .serializers import (
+    CourseSerializer,
+    LessonSerializer,
+    HomeworkSerializer
+)
+from utils.view_set_utils import get_custom_list
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -39,19 +34,20 @@ class CourseViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def user_add(self, request, *args, **kwargs):
+        student = Student.objects.get(user=request.user.id)
         data = {
-            'students': [request.user.pk]
+            'students': [student.id]
         }
         return self.patch_data(request, data, *args, **kwargs)
 
     def user_remove(self, request, *args, **kwargs):
         data = {
-            'students': [user for user in self.get_object().students.exclude(pk=request.user.pk)]
+            'students': [student for student in self.get_object().students.exclude(user=request.user.pk)]
         }
         return self.patch_data(request, data, *args, **kwargs)
 
     def student_list(self, request, *args, **kwargs):
-        queryset = Course.objects.filter(students=request.user.pk)
+        queryset = Course.objects.filter(students__user=request.user.id)
         return get_custom_list(self, queryset)
 
 
@@ -63,16 +59,11 @@ class LessonViewSet(viewsets.ModelViewSet):
         queryset = Lesson.objects \
             .select_related('teacher')\
             .filter(course_id=kwargs['pk']) \
-            .annotate(teacher_name=F('teacher__name'))
-        return get_custom_list(self, queryset)
-
-
-class TeacherViewSet(viewsets.ModelViewSet):
-    queryset = Teacher.objects.all()
-    serializer_class = TeacherSerializer
-
-    def course_list(self, request, *args, **kwargs):
-        queryset = Teacher.objects.filter(courses=kwargs['pk'])
+            .annotate(
+                teacher_first_name=F('teacher__user__first_name'),
+                teacher_last_name=F('teacher__user__last_name'),
+                teacher_username=F('teacher__user__username')
+            )
         return get_custom_list(self, queryset)
 
 
@@ -83,6 +74,6 @@ class HomeworkViewSet(viewsets.ModelViewSet):
     def homework_list(self, request, *args, **kwargs):
         queryset = Homework.objects\
             .select_related('lesson')\
-            .filter(student=request.user, lesson__course_id=kwargs['pk'])\
+            .filter(student__user=request.user.pk, lesson__course_id=kwargs['pk'])\
             .annotate(lesson_name=F('lesson__title'))
         return get_custom_list(self, queryset)

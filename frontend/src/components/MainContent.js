@@ -19,6 +19,7 @@ import CourseLessons from "./edu/CourseLessons";
 import CourseTeachers from "./edu/CourseTeachers";
 import Homework from "./edu/Homework";
 import Solution from "./edu/Solution";
+import Progress from "./edu/Progress";
 
 
 const MainContent = () => (
@@ -39,8 +40,9 @@ const MainContent = () => (
             <Route path="/my-courses" component={RequireAuth(UserCourses)}/>
             <Route path="/course-lessons" component={RequireAuth(CourseLessons)}/>
             <Route path="/course-teachers" component={RequireAuth(CourseTeachers)}/>
-            <Route path="/my-homeworks" component={RequireAuth(Homework)}/>
+            <Route path="/course-my-homework" component={RequireAuth(Homework)}/>
             <Route path="/my-homework" component={RequireAuth(Solution)}/>
+            <Route path="/progress" component={RequireAuth(Progress)}/>
             <Route component={NoMatch}/>
         </Switch>
     </div>

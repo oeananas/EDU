@@ -6,24 +6,42 @@ import { connect } from "react-redux";
 class Header extends Component {
 
     static propTypes = {
-        authenticated: PropTypes.bool
+        authenticated: PropTypes.bool,
+        isTeacher: PropTypes.string
     };
 
     renderLinks = () => {
         if (this.props.authenticated) {
-            return (
-                [
-                    <li className="nav-item" key="profile">
-                        <Link className="nav-link" to="/profile">Profile</Link>
-                    </li>,
-                    <li className="nav-item" key="mycourses">
-                        <Link className="nav-link" to="/my-courses">My courses</Link>
-                    </li>,
-                    <li className="nav-item" key="logout">
-                        <Link className="nav-link" to="/logout">Logout</Link>
-                    </li>
-                ]
-            );
+            if (this.props.isTeacher === 'true') {
+                return (
+                    [
+                        <li className="nav-item" key="profile">
+                            <Link className="nav-link" to="/profile">Profile</Link>
+                        </li>,
+                        <li className="nav-item" key="progress">
+                            <Link className="nav-link" to="/progress">Progress</Link>
+                        </li>,
+                        <li className="nav-item" key="logout">
+                            <Link className="nav-link" to="/logout">Logout</Link>
+                        </li>
+                    ]
+                );
+            } else {
+                return (
+                    [
+                        <li className="nav-item" key="profile">
+                            <Link className="nav-link" to="/profile">Profile</Link>
+                        </li>,
+                        <li className="nav-item" key="mycourses">
+                            <Link className="nav-link" to="/my-courses">My courses</Link>
+                        </li>,
+                        <li className="nav-item" key="logout">
+                            <Link className="nav-link" to="/logout">Logout</Link>
+                        </li>
+                    ]
+                );
+            }
+
 
         } else {
             return (
@@ -53,7 +71,8 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        authenticated: state.auth.authenticated
+        authenticated: state.auth.authenticated,
+        isTeacher: state.auth.isTeacher
     }
 };
 

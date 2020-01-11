@@ -23,16 +23,24 @@ class Landing extends Component {
 
     renderAddButton = (item) => {
         const user_courses = this.props.user_courses;
+        const isTeacher = localStorage.getItem('is_teacher');
         if (user_courses) {
-            if (!user_courses.some(element => element.id === item.id)) {
+            if (isTeacher === 'true') {
                 return (
-                    <button onClick={this.props.addUserCourse.bind(this, item.id)} className="btn btn-outline-success mr-2">Add to my courses</button>
+                    <Link to="#" className="disabled btn btn-outline-danger mr-2">Not available for teacher</Link>
                 )
             } else {
-                return (
-                    <Link to="#" className="disabled btn btn-outline-warning mr-2">Already in my courses</Link>
-                )
+                if (!user_courses.some(element => element.id === item.id)) {
+                    return (
+                        <button onClick={this.props.addUserCourse.bind(this, item.id)} className="btn btn-outline-success mr-2">Add to my courses</button>
+                    )
+                } else {
+                    return (
+                        <Link to="#" className="disabled btn btn-outline-warning mr-2">Already in my courses</Link>
+                    )
+                }
             }
+
         }
     };
 
@@ -67,7 +75,11 @@ class Landing extends Component {
                 );
             } else {
                 return (
-                    <h1>Welcome to the main page!</h1>
+                    <div>
+                        <h1>Welcome to the main page!</h1>
+                        <p>please, logout and sign in again</p>
+                    </div>
+
                 );
             }
 
