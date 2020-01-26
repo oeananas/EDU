@@ -8,19 +8,9 @@ import store from "../store";
 import { getUserToken } from "../utils/authUtils";
 
 
-export const authLogin = (token) => {
-    return {
-        type: AuthTypes.LOGIN,
-        payload: token
-    };
-};
+export const authLogin = (token) => ({type: AuthTypes.LOGIN, payload: token});
 
-export const authTeacher = (isTeacher) => {
-    return {
-        type: AuthTypes.IS_TEACHER,
-        payload: isTeacher
-    };
-};
+export const authTeacher = (isTeacher) => ({type: AuthTypes.IS_TEACHER, payload: isTeacher})
 
 export const loginUser = (formValues, dispatch) => {
     const loginUrl = AuthUrls.LOGIN;
@@ -78,13 +68,7 @@ export const signupUser = (formValues) => {
 };
 
 
-const setUserProfile = (payload) => {
-    return {
-        type: AuthTypes.USER_PROFILE,
-        payload: payload
-    };
-};
-
+const setUserProfile = (payload) => ({type: AuthTypes.USER_PROFILE, payload: payload});
 
 export const getUserProfile = () => {
     return (dispatch) => {
@@ -97,10 +81,7 @@ export const getUserProfile = () => {
             }).then((response) => {
                 const user = response.data;
                 dispatch(setUserProfile(user));
-            }).catch((error) => {
-                console.log(error);
-                // TODO: send notification and redirect
-            });
+            }).catch(error => console.log(error));
         }
     };
 };
