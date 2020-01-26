@@ -60,38 +60,42 @@ export const getUserCourses = () => {
 
 
 export const addUserCourse = (formValues) => {
-    return () => {
+    return async () => {
         const token = getUserToken(store.getState());
         if (token) {
-            return axios.patch( `${EduUrls.ADD_COURSE}${formValues}/`, {}, {
-                headers: {
-                    Authorization: 'JWT ' + token
-                }
-            }).then(() => {
+            try {
+                await axios.patch(`${EduUrls.ADD_COURSE}${formValues}/`, {}, {
+                    headers: {
+                        Authorization: 'JWT ' + token
+                    }
+                });
                 // redirect to the route '/my-courses'
                 history.push("/my-courses");
-            }).catch((error) => {
+            }
+            catch (error) {
                 console.log(error);
-            });
+            }
         }
     };
 };
 
 
 export const removeUserCourse = (formValues) => {
-    return () => {
+    return async () => {
         const token = getUserToken(store.getState());
         if (token) {
-            return axios.patch( `${EduUrls.REMOVE_COURSE}${formValues}/`, {}, {
-                headers: {
-                    Authorization: 'JWT ' + token
-                }
-            }).then(() => {
+            try {
+                await axios.patch(`${EduUrls.REMOVE_COURSE}${formValues}/`, {}, {
+                    headers: {
+                        Authorization: 'JWT ' + token
+                    }
+                });
                 // redirect to the route '/'
                 history.push("/");
-            }).catch((error) => {
+            }
+            catch (error) {
                 console.log(error);
-            });
+            }
         }
     };
 };
@@ -206,19 +210,21 @@ export const getStudentHomeworks = () => {
 
 
 export const setDoneHomework = (formValues) => {
-    return () => {
+    return async () => {
         const token = getUserToken(store.getState());
         if (token) {
-            return axios.patch( `${EduUrls.SET_DONE_HOMEWORK}${formValues}/`, {}, {
-                headers: {
-                    Authorization: 'JWT ' + token
-                }
-            }).then(() => {
+            try {
+                await axios.patch(`${EduUrls.SET_DONE_HOMEWORK}${formValues}/`, {}, {
+                    headers: {
+                        Authorization: 'JWT ' + token
+                    }
+                });
                 // redirect to the route '/student-homework'
                 window.location.reload();
-            }).catch((error) => {
+            }
+            catch (error) {
                 console.log(error);
-            });
+            }
         }
     };
 };
@@ -252,22 +258,23 @@ export const getHomework = () => {
 };
 
 
-export const sendHomework = (formValues, dispatch) => {
+export const sendHomework = async (formValues, dispatch) => {
     const token = getUserToken(store.getState());
     const homework_pk = localStorage.getItem("homework");
-    return axios.patch(`${EduUrls.HOMEWORK}${homework_pk}/`, formValues, {
-        headers: {
-            Authorization: 'JWT ' + token
-        }
-    })
-        .then(response => {
-            dispatch(setHomework(response.data));
-            history.push('/course-my-homework');
-        }).catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            console.log(error);
+    try {
+        const response = await axios.patch(`${EduUrls.HOMEWORK}${homework_pk}/`, formValues, {
+            headers: {
+                Authorization: 'JWT ' + token
+            }
         });
+        dispatch(setHomework(response.data));
+        history.push('/course-my-homework');
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        console.log(error);
+    }
 };
 
 

@@ -12,34 +12,29 @@ export const authLogin = (token) => ({type: AuthTypes.LOGIN, payload: token});
 
 export const authTeacher = (isTeacher) => ({type: AuthTypes.IS_TEACHER, payload: isTeacher})
 
-export const loginUser = (formValues, dispatch) => {
+export const loginUser = async (formValues, dispatch) => {
     const loginUrl = AuthUrls.LOGIN;
     const isTeacherUrl = AuthUrls.IS_TEACHER;
 
-    return axios.post(loginUrl, formValues)
-        .then((response) => {
-            // If request is good...
-            // Update state to indicate user is authenticated
-            const token = response.data.token;
-            dispatch(authLogin(token));
-
-            localStorage.setItem("token", token);
-        })
-        .then(() => {
-            return axios.post(isTeacherUrl, formValues)
-                .then((response) => {
-                    const isTeacher = response.data.is_teacher;
-                    localStorage.setItem('is_teacher', isTeacher);
-                    dispatch(authTeacher(isTeacher));
-                    // redirect to the route '/'
-                    history.push("/");
-                    window.location.reload();
-                })
-        })
-        .catch(error => {
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
-        });
+    try {
+        const response = await axios.post(loginUrl, formValues);
+        // If request is good...
+        // Update state to indicate user is authenticated
+        const token = response.data.token;
+        dispatch(authLogin(token));
+        localStorage.setItem("token", token);
+        const response_1 = await axios.post(isTeacherUrl, formValues);
+        const isTeacher = response_1.data.is_teacher;
+        localStorage.setItem('is_teacher', isTeacher);
+        dispatch(authTeacher(isTeacher));
+        // redirect to the route '/'
+        history.push("/");
+        window.location.reload();
+    }
+    catch (error) {
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
@@ -52,19 +47,19 @@ export const logoutUser = () => {
 };
 
 
-export const signupUser = (formValues) => {
+export const signupUser = async (formValues) => {
     const signupUrl = AuthUrls.SIGNUP;
 
-    return axios.post(signupUrl, formValues)
-        .then(() => {
-            history.push("/signup_done");
-        })
-        .catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
-        });
+    try {
+        await axios.post(signupUrl, formValues);
+        history.push("/signup_done");
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
@@ -87,95 +82,99 @@ export const getUserProfile = () => {
 };
 
 
-export const changePassword = (formValues) => {
+export const changePassword = async (formValues) => {
     const changePasswordUrl = AuthUrls.CHANGE_PASSWORD;
     const token = getUserToken(store.getState());
 
     if (token) {
-        return axios.post(changePasswordUrl, formValues, {
-            headers: {
-                Authorization: 'JWT ' + token
-            }
-        })
-            .then(() => {
-                history.push("/profile");
-            })
-            .catch((error) => {
-                // If request is bad...
-                // Show an error to the user
-                const processedError = processServerError(error.response.data);
-                throw new SubmissionError(processedError);
+        try {
+            await axios.post(changePasswordUrl, formValues, {
+                headers: {
+                    Authorization: 'JWT ' + token
+                }
             });
+            history.push("/profile");
+        }
+        catch (error) {
+            // If request is bad...
+            // Show an error to the user
+            const processedError = processServerError(error.response.data);
+            throw new SubmissionError(processedError);
+        }
     }
 };
 
 
-export const resetPassword = (formValues) => {
+export const resetPassword = async (formValues) => {
     const resetPasswordUrl = AuthUrls.RESET_PASSWORD;
 
-    return axios.post(resetPasswordUrl, formValues)
-        .then(() => {
-            // redirect to reset done page
-            history.push("/reset_password_done");
-        }).catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
-        });
+    try {
+        await axios.post(resetPasswordUrl, formValues);
+        // redirect to reset done page
+        history.push("/reset_password_done");
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
-export const confirmPasswordChange = (formValues, dispatch, props) => {
+export const confirmPasswordChange = async (formValues, dispatch, props) => {
     const { uid, token } = props.match.params;
     const resetPasswordConfirmUrl = AuthUrls.RESET_PASSWORD_CONFIRM;
     const data = Object.assign(formValues, { uid, token });
 
-    return axios.post(resetPasswordConfirmUrl, data)
-        .then(() => {
-            history.push("/login");
-        }).catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
-        });
+    try {
+        await axios.post(resetPasswordConfirmUrl, data);
+        history.push("/login");
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
-export const activateUserAccount = (formValues, dispatch, props) => {
+export const activateUserAccount = async (formValues, dispatch, props) => {
     const { key } = props.match.params;
     const activateUserUrl = AuthUrls.USER_ACTIVATION;
     const data = Object.assign(formValues, { key });
 
-    return axios.post(activateUserUrl, data)
-        .then(() => {
-            history.push("/login");
-        }).catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
-        });
+    try {
+        await axios.post(activateUserUrl, data);
+        history.push("/login");
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
-export const updateUserProfile = (formValues) => {
+export const updateUserProfile = async (formValues) => {
     const token = getUserToken(store.getState());
 
-    return axios.patch(AuthUrls.USER_PROFILE, formValues, {
-        headers: {
-            Authorization: 'JWT ' + token
-        }
-    })
-        .then(() => {
-            history.push("/profile");
-        }).catch((error) => {
-            // If request is bad...
-            // Show an error to the user
-            const processedError = processServerError(error.response.data);
-            throw new SubmissionError(processedError);
+    try {
+        await axios.patch(AuthUrls.USER_PROFILE, formValues, {
+            headers: {
+                Authorization: 'JWT ' + token
+            }
         });
+        history.push("/profile");
+    }
+    catch (error) {
+        // If request is bad...
+        // Show an error to the user
+        const processedError = processServerError(error.response.data);
+        throw new SubmissionError(processedError);
+    }
 };
 
 
