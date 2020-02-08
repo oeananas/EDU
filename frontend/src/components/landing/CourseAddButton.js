@@ -18,7 +18,7 @@ class CourseAddButton extends Component {
     renderAddButton = (item) => {
         const user_courses = this.props.user_courses;
         const isTeacher = localStorage.getItem('is_teacher');
-        
+
         if (user_courses) {
             if (isTeacher === 'true') {
                 return this.renderButtonForTeacher()
@@ -38,7 +38,6 @@ class CourseAddButton extends Component {
                 {this.renderAddButton(this.props.item)}
             </div>
         )
-        
     }
 }
 

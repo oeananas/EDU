@@ -22,7 +22,7 @@ class Landing extends Component {
     renderCourses = () => {
         const courses = this.props.courses;
         return (
-            courses ? 
+            courses ?
             <div className="container">
                     {courses.map(item => (
                         <div className="card-transparent m-4" key={item.id}>

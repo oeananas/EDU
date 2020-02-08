@@ -25,6 +25,10 @@ class UserCourses extends Component {
         this.props.getUserCourses();
     };
 
+    setIdToStorage = (itemId) => {
+        localStorage.setItem("course", itemId)
+    };
+
     renderCourses = () => {
         const courses = this.props.user_courses;
         if (courses) {
@@ -37,9 +41,9 @@ class UserCourses extends Component {
                                     <h5><strong>{item.title}</strong></h5>
                                 </div>
                                 <div className="col-5">
-                                    <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-primary mr-2" to='/course-lessons'>Lessons</Link>
-                                    <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-success mr-2" to="/course-teachers">Teachers</Link>
-                                    <Link onClick={() => localStorage.setItem("course", item.id)} className="btn btn-outline-warning mr-2" to="/course-my-homework">My homework</Link>
+                                    <Link onClick={this.setIdToStorage(item.id)} className="btn btn-outline-primary mr-2" to='/course-lessons'>Lessons</Link>
+                                    <Link onClick={this.setIdToStorage(item.id)} className="btn btn-outline-success mr-2" to="/course-teachers">Teachers</Link>
+                                    <Link onClick={this.setIdToStorage(item.id)} className="btn btn-outline-warning mr-2" to="/course-my-homework">My homework</Link>
                                 </div>
                                 <div className="col-4">
                                     <button onClick={this.props.removeUserCourse.bind(this, item.id)} className="btn btn-outline-danger mr-2">Remove</button>
